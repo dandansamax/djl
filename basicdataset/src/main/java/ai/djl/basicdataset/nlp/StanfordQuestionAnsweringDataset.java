@@ -119,7 +119,7 @@ public class StanfordQuestionAnsweringDataset extends TextDataset implements Raw
         List<String> sourceTextData = new ArrayList<>();
         List<String> targetTextData = new ArrayList<>();
 
-        // a big ugly nested loop to handle the big ugly nested json object
+        // a nested loop to handle the nested json object
         List<Map<String, Object>> paragraphs;
         List<Map<String, Object>> questions;
         List<Map<String, Object>> answers;
