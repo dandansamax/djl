@@ -19,9 +19,7 @@ import ai.djl.repository.Repository;
 import ai.djl.training.dataset.Dataset;
 import ai.djl.training.dataset.Record;
 import ai.djl.translate.TranslateException;
-
 import java.io.IOException;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,6 +27,7 @@ public class PennTreebankTextTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1579
     @Test
     public void testPennTreebankTextTrainLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -60,6 +59,7 @@ public class PennTreebankTextTest {
         }
     }
 
+    //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1579
     @Test
     public void testPennTreebankTextTestLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -91,6 +91,7 @@ public class PennTreebankTextTest {
         }
     }
 
+    //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1579
     @Test
     public void testPennTreebankTextValidationLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -122,6 +123,7 @@ public class PennTreebankTextTest {
         }
     }
 
+    //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1579
     @Test
     public void testPrepare1() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -149,6 +151,7 @@ public class PennTreebankTextTest {
         }
     }
 
+    //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1579
     @Test
     public void testPrepare2() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
