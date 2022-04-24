@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/47
+
 /**
  * Stanford Question Answering Dataset (SQuAD) is a reading comprehension dataset, consisting of
  * questions posed by crowdworkers on a set of Wikipedia articles, where the answer to every
@@ -242,13 +243,19 @@ public class StanfordQuestionAnsweringDataset extends TextDataset implements Raw
     @Override
     protected void preprocess(List<String> newTextData, boolean source) throws EmbeddingException {
         TextData textData = source ? sourceTextData : targetTextData;
-        QuestionInfo questionInfo = questionInfoList.get(Math.toIntExact(this.limit) - 1);
-        int lastIndex =
-                source
-                        ? questionInfo.questionIndex
-                        : questionInfo.answerIndexList.get(questionInfo.answerIndexList.size() - 1);
-        textData.preprocess(
-                manager, newTextData.subList(0, Math.min(lastIndex + 1, newTextData.size())));
+        int limit;
+        if (this.limit < questionInfoList.size()) {
+            QuestionInfo questionInfo = questionInfoList.get(Math.toIntExact(this.limit) - 1);
+            limit =
+                    (source
+                                    ? questionInfo.questionIndex
+                                    : questionInfo.answerIndexList.get(
+                                            questionInfo.answerIndexList.size() - 1))
+                            + 1;
+        } else {
+            limit = newTextData.size();
+        }
+        textData.preprocess(manager, newTextData.subList(0, limit));
     }
 
     /** A builder for a {@link StanfordQuestionAnsweringDataset}. */
