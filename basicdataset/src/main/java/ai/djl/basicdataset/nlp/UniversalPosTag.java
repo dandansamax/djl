@@ -13,6 +13,7 @@
 
 package ai.djl.basicdataset.nlp;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/46
 /**
  * An enum class for Universal POS tags which mark the core part-of-speech categories.
  *

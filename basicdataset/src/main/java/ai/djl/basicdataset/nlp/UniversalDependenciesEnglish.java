@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/46
 /**
  * A Gold Standard Universal Dependencies Corpus for English, built over the source material of the
  * English Web Treebank LDC2012T13.
@@ -91,7 +92,7 @@ public class UniversalDependenciesEnglish extends TextDataset {
         Artifact artifact = mrl.getDefaultArtifact();
         mrl.prepare(artifact, progress);
         Path root = mrl.getRepository().getResourceDirectory(artifact);
-        Path usagePath = null;
+        Path usagePath;
         switch (usage) {
             case TRAIN:
                 usagePath = Paths.get("en-ud-v2/en-ud-v2/en-ud-tag.v2.train.txt");
@@ -103,7 +104,7 @@ public class UniversalDependenciesEnglish extends TextDataset {
                 usagePath = Paths.get("en-ud-v2/en-ud-v2/en-ud-tag.v2.dev.txt");
                 break;
             default:
-                break;
+                throw new UnsupportedOperationException("Unsupported usage type.");
         }
         usagePath = root.resolve(usagePath);
 
@@ -119,6 +120,7 @@ public class UniversalDependenciesEnglish extends TextDataset {
                     universalPosTags.add(universalPosTag);
                     universalPosTag = new ArrayList<>();
                     index2Range.put(index, Arrays.asList(start, (long) sourceTextData.size()));
+
                     index++;
                     start = sourceTextData.size();
                     continue;
@@ -146,12 +148,15 @@ public class UniversalDependenciesEnglish extends TextDataset {
     @Override
     protected void preprocess(List<String> newTextData, boolean source) throws EmbeddingException {
         TextData textData = source ? sourceTextData : targetTextData;
-        textData.preprocess(
-                manager,
-                newTextData.subList(
-                        0,
-                        Math.toIntExact(
-                                Math.min(index2Range.get(limit).get(1), newTextData.size()))));
+        int texDataLimit;
+        if (limit >= index2Range.size()) {
+            texDataLimit = newTextData.size();
+        } else {
+            texDataLimit =
+                    Math.toIntExact(
+                            Math.min(index2Range.get(limit - 1).get(1), newTextData.size()));
+        }
+        textData.preprocess(manager, newTextData.subList(0, texDataLimit));
     }
 
     /**
@@ -167,6 +172,9 @@ public class UniversalDependenciesEnglish extends TextDataset {
      */
     @Override
     public Record get(NDManager manager, long index) {
+        if (index >= limit) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", " + "Size: " + limit);
+        }
         List<Long> range = index2Range.get(index);
         NDArray embeddings = sourceTextData.getEmbedding(manager, range.get(0));
         for (long i = range.get(0) + 1; i < range.get(1); i++) {
@@ -205,7 +213,11 @@ public class UniversalDependenciesEnglish extends TextDataset {
             artifactId = ARTIFACT_ID;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * Returns this {@link Builder} object.
+         *
+         * @return this {@code BaseBuilder}
+         */
         @Override
         public Builder self() {
             return this;
