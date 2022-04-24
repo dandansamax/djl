@@ -26,6 +26,7 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/47
 @SuppressWarnings("unchecked")
 public class StanfordQuestionAnsweringDatasetTest {
 
