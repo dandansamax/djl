@@ -133,7 +133,7 @@ public class StanfordQuestionAnsweringDatasetTest {
 
             stanfordQuestionAnsweringDataset.prepare();
             // out of preprocessed bound to get
-            Record record = stanfordQuestionAnsweringDataset.get(manager, 20);
+            stanfordQuestionAnsweringDataset.get(manager, 20);
             Assert.fail("Should fail at out-of-bound get!");
         } catch (IndexOutOfBoundsException exception) {
             Assert.assertTrue(exception.getMessage().contains("Index: 20, Size: 13"));
