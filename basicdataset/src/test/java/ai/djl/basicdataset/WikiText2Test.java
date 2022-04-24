@@ -14,12 +14,14 @@ package ai.djl.basicdataset;
 
 import ai.djl.basicdataset.nlp.WikiText2;
 import ai.djl.ndarray.NDManager;
+import ai.djl.training.dataset.Batch;
 import ai.djl.training.dataset.Dataset;
 import ai.djl.translate.TranslateException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -75,8 +77,13 @@ public class WikiText2Test {
     public void testScenario2() throws IOException, TranslateException {
         try (NDManager manager = NDManager.newBaseManager()) {
             WikiText2 validSet = WikiText2.builder().optUsage(Dataset.Usage.VALIDATION).build();
-            Assert.assertThrows(
-                    NullPointerException.class, () -> validSet.getData(manager).iterator());
+            try {
+                Iterator<Batch> iter = validSet.getData(manager).iterator();
+                Assert.fail("A exception should be raised");
+                Assert.assertEquals(iter, null);
+            } catch (NullPointerException e) {
+                Assert.assertTrue(true);
+            }
         }
     }
 }
