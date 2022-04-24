@@ -123,7 +123,7 @@ public class PennTreebankTextTest {
     }
 
     @Test
-    public void TestPrepare1() throws IOException, TranslateException {
+    public void testPrepare1() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
         try (NDManager manager = NDManager.newBaseManager()) {
             PennTreebankText dataset =
@@ -150,7 +150,7 @@ public class PennTreebankTextTest {
     }
 
     @Test
-    public void TestPrepare2() throws IOException, TranslateException {
+    public void testPrepare2() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
         try (NDManager manager = NDManager.newBaseManager()) {
             PennTreebankText dataset =
