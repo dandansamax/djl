@@ -27,6 +27,7 @@ public class GoEmotionsTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
     @Test
     public void testGoEmotionTrainLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -56,6 +57,7 @@ public class GoEmotionsTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
     @Test
     public void testGoEmotionTestLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -85,6 +87,7 @@ public class GoEmotionsTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
     @Test
     public void testGoEmotionValidationLocal() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -104,6 +107,60 @@ public class GoEmotionsTest {
 
             long size = trainingSet.size();
             Assert.assertEquals(size, 5426);
+
+            Record record = trainingSet.get(manager, 0);
+
+            Assert.assertEquals(record.getData().size(), 1);
+            Assert.assertEquals(record.getData().get(0).getShape().dimension(), 2);
+            Assert.assertEquals(record.getLabels().size(), 1);
+            Assert.assertEquals(record.getLabels().get(0).getShape().dimension(), 1);
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testScenario1() throws TranslateException, IOException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .setSampling(32, true)
+                            .build();
+
+            long size = trainingSet.size();
+            Assert.assertEquals(size, 0);
+        } catch (UnsupportedOperationException uoe) {
+            Assert.assertEquals(uoe.getMessage(), "Validation data not available.");
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testScenario2() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.VALIDATION)
+                            .setSampling(32, true)
+                            .build();
+
+            trainingSet.prepare();
+            trainingSet.prepare();
+            Assert.assertEquals(trainingSet.size(), 5426);
 
             Record record = trainingSet.get(manager, 0);
 
