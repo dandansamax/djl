@@ -18,20 +18,18 @@ import ai.djl.ndarray.NDManager;
 import ai.djl.training.dataset.Dataset;
 import ai.djl.training.dataset.Record;
 import ai.djl.translate.TranslateException;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/47
 @SuppressWarnings("unchecked")
 public class StanfordQuestionAnsweringDatasetTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testPrepare1() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -57,6 +55,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testPrepare2() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -73,7 +72,6 @@ public class StanfordQuestionAnsweringDatasetTest {
                                                     TestUtils.getTextEmbedding(
                                                             manager, EMBEDDING_SIZE)))
                             .setSampling(32, true)
-                            .optLimit(100000)
                             .optUsage(Dataset.Usage.TEST)
                             .build();
 
@@ -82,6 +80,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testGet1() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -111,6 +110,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testGet2() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -140,6 +140,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testGetData1() throws IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -166,6 +167,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testGetData2() throws IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -192,6 +194,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testScenario1() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
@@ -219,6 +222,7 @@ public class StanfordQuestionAnsweringDatasetTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
     public void testScenario2() throws IOException, TranslateException {
         try (NDManager manager = NDManager.newBaseManager()) {
