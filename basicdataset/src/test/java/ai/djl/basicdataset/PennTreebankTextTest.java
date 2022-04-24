@@ -19,7 +19,9 @@ import ai.djl.repository.Repository;
 import ai.djl.training.dataset.Dataset;
 import ai.djl.training.dataset.Record;
 import ai.djl.translate.TranslateException;
+
 import java.io.IOException;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -117,6 +119,60 @@ public class PennTreebankTextTest {
             Record record = dataset.get(manager, 0);
             Assert.assertEquals(record.getData().get(0).getShape().dimension(), 2);
             Assert.assertNull(record.getLabels());
+        }
+    }
+
+    @Test
+    public void TestPrepare1() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            PennTreebankText dataset =
+                    PennTreebankText.builder()
+                            .setSourceConfiguration(
+                                    new Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE))
+                                            .setEmbeddingSize(EMBEDDING_SIZE))
+                            .setTargetConfiguration(
+                                    new Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE))
+                                            .setEmbeddingSize(EMBEDDING_SIZE))
+                            .setSampling(32, true)
+                            .optLimit(100)
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .build();
+            dataset.prepare();
+        }
+    }
+
+    @Test
+    public void TestPrepare2() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            PennTreebankText dataset =
+                    PennTreebankText.builder()
+                            .setSourceConfiguration(
+                                    new Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE))
+                                            .setEmbeddingSize(EMBEDDING_SIZE))
+                            .setTargetConfiguration(
+                                    new Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE))
+                                            .setEmbeddingSize(EMBEDDING_SIZE))
+                            .setSampling(32, true)
+                            .optLimit(100)
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TEST)
+                            .build();
+            dataset.prepare();
         }
     }
 }
