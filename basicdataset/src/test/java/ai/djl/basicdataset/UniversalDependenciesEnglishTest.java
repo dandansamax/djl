@@ -198,13 +198,24 @@ public class UniversalDependenciesEnglishTest {
 
             Record record520 = universalDependenciesEnglish.get(manager, 520);
             Record record1210 = universalDependenciesEnglish.get(manager, 1210);
+
             Assert.assertEquals(record520.getData().get(0).getShape().dimension(), 2);
+            Assert.assertEquals(record1210.getData().get(0).getShape().dimension(), 2);
+
+            Assert.assertEquals(record520.getLabels().get(0).getShape().dimension(), 1);
             Assert.assertEquals(record1210.getLabels().get(0).getShape().dimension(), 1);
+
+            Assert.assertEquals(record520.getData().get(0).getShape().get(1), 15);
             Assert.assertEquals(
                     record520.getData().get(0).getShape().get(1),
                     record1210.getData().get(0).getShape().get(1));
+
             Assert.assertEquals(record520.getData().size(), 1);
+            Assert.assertEquals(record1210.getData().size(), 1);
+
+            Assert.assertEquals(record520.getLabels().size(), 1);
             Assert.assertEquals(record1210.getLabels().size(), 1);
+
             Assert.assertEquals(
                     record520.getData().get(0).getShape().get(0),
                     record520.getLabels().get(0).getShape().get(0));
