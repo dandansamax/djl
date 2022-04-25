@@ -23,7 +23,6 @@ import java.io.IOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-
 public class UniversalDependenciesEnglishTest {
 
     private static final int EMBEDDING_SIZE = 15;
