@@ -23,11 +23,12 @@ import java.io.IOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/46
+
 public class UniversalDependenciesEnglishTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testPrepare1() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -55,6 +56,7 @@ public class UniversalDependenciesEnglishTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testPrepare2() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -81,6 +83,7 @@ public class UniversalDependenciesEnglishTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testGet1() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -110,6 +113,7 @@ public class UniversalDependenciesEnglishTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testGet2() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -139,6 +143,7 @@ public class UniversalDependenciesEnglishTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testScenario1() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -170,6 +175,7 @@ public class UniversalDependenciesEnglishTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testScenario2() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
