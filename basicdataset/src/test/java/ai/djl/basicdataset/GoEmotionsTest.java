@@ -15,6 +15,7 @@ package ai.djl.basicdataset;
 import ai.djl.basicdataset.nlp.GoEmotions;
 import ai.djl.basicdataset.utils.TextData;
 import ai.djl.ndarray.NDManager;
+import ai.djl.repository.Repository;
 import ai.djl.training.dataset.Dataset;
 import ai.djl.training.dataset.Record;
 import ai.djl.translate.TranslateException;
@@ -26,32 +27,159 @@ public class GoEmotionsTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
     @Test
-    public void testGoEmotions() throws IOException, TranslateException {
-        for (Dataset.Usage usage :
-                new Dataset.Usage[] {
-                    Dataset.Usage.TRAIN, Dataset.Usage.VALIDATION, Dataset.Usage.TEST
-                }) {
-            try (NDManager manager = NDManager.newBaseManager()) {
-                GoEmotions testDataSet =
-                        GoEmotions.builder()
-                                .setSourceConfiguration(
-                                        new TextData.Configuration()
-                                                .setTextEmbedding(
-                                                        TestUtils.getTextEmbedding(
-                                                                manager, EMBEDDING_SIZE)))
-                                .optUsage(usage)
-                                .setSampling(32, true)
-                                .build();
-                testDataSet.prepare();
+    public void testPrepare1() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .setSampling(32, true)
+                            .build();
+            trainingSet.prepare();
 
-                Record record = testDataSet.get(manager, 0);
+            long size = trainingSet.size();
+            Assert.assertEquals(size, 43410);
+        }
+    }
 
-                Assert.assertEquals(record.getData().size(), 1);
-                Assert.assertEquals(record.getData().get(0).getShape().dimension(), 2);
-                Assert.assertEquals(record.getLabels().size(), 1);
-                Assert.assertEquals(record.getLabels().get(0).getShape().dimension(), 1);
-            }
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testPrepare2() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TEST)
+                            .setSampling(32, true)
+                            .build();
+            trainingSet.prepare();
+
+            long size = trainingSet.size();
+            Assert.assertEquals(size, 5427);
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testGet1() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TEST)
+                            .setSampling(32, true)
+                            .build();
+            trainingSet.prepare();
+
+            long size = trainingSet.size();
+            Assert.assertEquals(size, 5427);
+
+            Record record = trainingSet.get(manager, 0);
+
+            Assert.assertEquals(record.getData().size(), 1);
+            Assert.assertEquals(record.getData().get(0).getShape().dimension(), 2);
+            Assert.assertEquals(record.getLabels().size(), 1);
+            Assert.assertEquals(record.getLabels().get(0).getShape().dimension(), 1);
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testGet2() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.VALIDATION)
+                            .optLimit(10)
+                            .setSampling(32, true)
+                            .build();
+            trainingSet.prepare();
+
+            trainingSet.get(manager, 15);
+            Assert.fail("Should fail at out-of-bound get!");
+        } catch (IndexOutOfBoundsException exception) {
+            Assert.assertTrue(exception.getMessage().contains("Index: 15, Size: 10"));
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testScenario1() throws TranslateException, IOException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .setSampling(32, true)
+                            .build();
+
+            long size = trainingSet.size();
+            Assert.assertEquals(size, 0);
+        } catch (UnsupportedOperationException uoe) {
+            Assert.assertEquals(uoe.getMessage(), "Validation data not available.");
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1597
+    @Test
+    public void testScenario2() throws IOException, TranslateException {
+        Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
+        try (NDManager manager = NDManager.newBaseManager()) {
+            GoEmotions trainingSet =
+                    GoEmotions.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .optRepository(repository)
+                            .optUsage(Dataset.Usage.VALIDATION)
+                            .setSampling(32, true)
+                            .build();
+
+            trainingSet.prepare();
+            trainingSet.prepare();
+            Assert.assertEquals(trainingSet.size(), 5426);
+
+            Record record = trainingSet.get(manager, 0);
+
+            Assert.assertEquals(record.getData().size(), 1);
+            Assert.assertEquals(record.getData().get(0).getShape().dimension(), 2);
+            Assert.assertEquals(record.getLabels().size(), 1);
+            Assert.assertEquals(record.getLabels().get(0).getShape().dimension(), 1);
         }
     }
 }

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/47
 /**
  * Stanford Question Answering Dataset (SQuAD) is a reading comprehension dataset, consisting of
  * questions posed by crowdworkers on a set of Wikipedia articles, where the answer to every

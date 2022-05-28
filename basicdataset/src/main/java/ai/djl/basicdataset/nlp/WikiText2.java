@@ -26,6 +26,7 @@ import ai.djl.util.Progress;
 import java.io.IOException;
 import java.nio.file.Path;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/45
 /**
  * The WikiText language modeling dataset is a collection of over 100 million tokens extracted from
  * the set of verified Good and Featured articles on Wikipedia.

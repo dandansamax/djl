@@ -34,6 +34,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1597
 /**
  * GoEmotions is a corpus of 58k carefully curated comments extracted from Reddit, with human
  * annotations to 27 emotion categories or Neutral. This version of data is filtered based on
