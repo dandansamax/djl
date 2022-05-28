@@ -33,6 +33,7 @@ import org.testng.annotations.Test;
 
 public class DailyDelhiClimateTest {
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1590
     @Test
     public void testDailyDelhiClimateRemote() throws IOException, TranslateException {
         TrainingConfig config =
@@ -61,6 +62,45 @@ public class DailyDelhiClimateTest {
             NDList data = record.getData();
             NDList labels = record.getLabels();
             Assert.assertEquals(data.head().toFloatArray(), new float[] {85.86957f, 2.7434783f});
+            Assert.assertEquals(labels.size(), 0);
+
+            try (Trainer trainer = model.newTrainer(config)) {
+                Batch batch = trainer.iterateDataset(dailyDelhiClimate).iterator().next();
+                Assert.assertEquals(batch.getData().size(), 1);
+                Assert.assertEquals(batch.getLabels().size(), 0);
+                batch.close();
+            }
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1590
+    @Test
+    public void testDailyDelhiClimateAllFeatures() throws IOException, TranslateException {
+        TrainingConfig config =
+                new DefaultTrainingConfig(Loss.softmaxCrossEntropyLoss())
+                        .optInitializer(Initializer.ONES, Parameter.Type.WEIGHT);
+
+        try (Model model = Model.newInstance("model")) {
+            model.setBlock(Blocks.identityBlock());
+
+            NDManager manager = model.getNDManager();
+            // path of directory
+            DailyDelhiClimate dailyDelhiClimate =
+                    DailyDelhiClimate.builder()
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .setSampling(32, true)
+                            .build();
+
+            dailyDelhiClimate.prepare();
+
+            long size = dailyDelhiClimate.size();
+            Assert.assertEquals(size, 1462);
+
+            Record record = dailyDelhiClimate.get(manager, 2);
+            NDList data = record.getData();
+            NDList labels = record.getLabels();
+            float[] a = data.head().toFloatArray();
+            Assert.assertEquals(data.head().toFloatArray(), new float[] {15708.0f, 7.1666665f, 87.0f, 4.633333f, 1018.6667f});
             Assert.assertEquals(labels.size(), 0);
 
             try (Trainer trainer = model.newTrainer(config)) {

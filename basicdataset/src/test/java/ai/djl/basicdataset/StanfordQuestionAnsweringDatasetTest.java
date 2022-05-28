@@ -19,6 +19,7 @@ import ai.djl.training.dataset.Dataset;
 import ai.djl.training.dataset.Record;
 import ai.djl.translate.TranslateException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -28,9 +29,9 @@ public class StanfordQuestionAnsweringDatasetTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
-    public void testGetDataWithPreTrainedEmbedding() throws TranslateException, IOException {
-
+    public void testPrepare1() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
             StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
                     StanfordQuestionAnsweringDataset.builder()
@@ -50,64 +51,13 @@ public class StanfordQuestionAnsweringDatasetTest {
                             .build();
 
             stanfordQuestionAnsweringDataset.prepare();
-            Record record = stanfordQuestionAnsweringDataset.get(manager, 0);
-            Assert.assertEquals(record.getData().get("title").getShape().get(0), 1);
-            Assert.assertEquals(record.getData().get("question").getShape().get(0), 7);
-            Assert.assertEquals(record.getLabels().size(), 4);
+            Assert.assertEquals(stanfordQuestionAnsweringDataset.size(), 10);
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
-    public void testGetDataWithTrainableEmbedding() throws IOException, TranslateException {
-        try (NDManager manager = NDManager.newBaseManager()) {
-            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
-                    StanfordQuestionAnsweringDataset.builder()
-                            .setSourceConfiguration(
-                                    new TextData.Configuration().setEmbeddingSize(EMBEDDING_SIZE))
-                            .setTargetConfiguration(
-                                    new TextData.Configuration().setEmbeddingSize(EMBEDDING_SIZE))
-                            .setSampling(32, true)
-                            .optLimit(10)
-                            .build();
-
-            stanfordQuestionAnsweringDataset.prepare();
-            Record record = stanfordQuestionAnsweringDataset.get(manager, 0);
-            Assert.assertEquals(record.getData().get("title").getShape().dimension(), 1);
-            Assert.assertEquals(record.getData().get("context").getShape().get(0), 156);
-            Assert.assertEquals(record.getLabels().size(), 1);
-        }
-    }
-
-    @Test
-    public void testInvalidUsage() throws TranslateException, IOException {
-
-        try (NDManager manager = NDManager.newBaseManager()) {
-            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
-                    StanfordQuestionAnsweringDataset.builder()
-                            .setSourceConfiguration(
-                                    new TextData.Configuration()
-                                            .setTextEmbedding(
-                                                    TestUtils.getTextEmbedding(
-                                                            manager, EMBEDDING_SIZE)))
-                            .setTargetConfiguration(
-                                    new TextData.Configuration()
-                                            .setTextEmbedding(
-                                                    TestUtils.getTextEmbedding(
-                                                            manager, EMBEDDING_SIZE)))
-                            .setSampling(32, true)
-                            .optLimit(10)
-                            .optUsage(Dataset.Usage.VALIDATION)
-                            .build();
-
-            stanfordQuestionAnsweringDataset.prepare();
-        } catch (UnsupportedOperationException uoe) {
-            Assert.assertEquals(uoe.getMessage(), "Validation data not available.");
-        }
-    }
-
-    @Test
-    public void testMisc() throws TranslateException, IOException {
-
+    public void testPrepare2() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
             StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
                     StanfordQuestionAnsweringDataset.builder()
@@ -125,23 +75,14 @@ public class StanfordQuestionAnsweringDatasetTest {
                             .optUsage(Dataset.Usage.TEST)
                             .build();
 
-            stanfordQuestionAnsweringDataset.prepare();
             stanfordQuestionAnsweringDataset.prepare();
             Assert.assertEquals(stanfordQuestionAnsweringDataset.size(), 11873);
-
-            Record record0 = stanfordQuestionAnsweringDataset.get(manager, 0);
-            Record record6 = stanfordQuestionAnsweringDataset.get(manager, 6);
-            Assert.assertEquals(record6.getData().get("title").getShape().dimension(), 2);
-            Assert.assertEquals(
-                    record0.getData().get("context").getShape().get(0),
-                    record6.getData().get("context").getShape().get(0));
-            Assert.assertEquals(record6.getLabels().size(), 0);
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
-    public void testLimitBoundary() throws TranslateException, IOException {
-
+    public void testGet1() throws TranslateException, IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
             StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
                     StanfordQuestionAnsweringDataset.builder()
@@ -156,22 +97,52 @@ public class StanfordQuestionAnsweringDatasetTest {
                                                     TestUtils.getTextEmbedding(
                                                             manager, EMBEDDING_SIZE)))
                             .setSampling(32, true)
-                            .optLimit(3)
+                            .optLimit(10)
                             .optUsage(Dataset.Usage.TEST)
                             .build();
 
             stanfordQuestionAnsweringDataset.prepare();
-            Assert.assertEquals(stanfordQuestionAnsweringDataset.size(), 3);
-            Record record = stanfordQuestionAnsweringDataset.get(manager, 2);
-            Assert.assertEquals(record.getData().get("title").getShape().dimension(), 2);
-            Assert.assertEquals(record.getData().get("context").getShape().get(0), 140);
-            Assert.assertEquals(record.getLabels().size(), 4);
+            // normal get
+            Record record = stanfordQuestionAnsweringDataset.get(manager, 9);
+            Assert.assertEquals(record.getData().get("title").getShape().get(0), 1);
+            Assert.assertEquals(record.getData().get("question").getShape().get(0), 10);
+            Assert.assertEquals(record.getLabels().size(), 3);
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
     @Test
-    public void testRawData() throws IOException {
+    public void testGet2() throws TranslateException, IOException {
+        try (NDManager manager = NDManager.newBaseManager()) {
+            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
+                    StanfordQuestionAnsweringDataset.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setTargetConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setSampling(32, true)
+                            .optLimit(10)
+                            .optUsage(Dataset.Usage.TEST)
+                            .build();
 
+            stanfordQuestionAnsweringDataset.prepare();
+            // out of preprocessed bound to get
+            stanfordQuestionAnsweringDataset.get(manager, 20);
+            Assert.fail("Should fail at out-of-bound get!");
+        } catch (IndexOutOfBoundsException exception) {
+            Assert.assertTrue(exception.getMessage().contains("Index: 20, Size: 13"));
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
+    @Test
+    public void testGetData1() throws IOException {
         try (NDManager manager = NDManager.newBaseManager()) {
             StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
                     StanfordQuestionAnsweringDataset.builder()
@@ -192,7 +163,97 @@ public class StanfordQuestionAnsweringDatasetTest {
 
             Map<String, Object> data =
                     (Map<String, Object>) stanfordQuestionAnsweringDataset.getData();
-            Assert.assertEquals(data.get("version").toString(), "v2.0");
+            Assert.assertEquals(((List<Object>) data.get("data")).size(), 35);
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
+    @Test
+    public void testGetData2() throws IOException {
+        try (NDManager manager = NDManager.newBaseManager()) {
+            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
+                    StanfordQuestionAnsweringDataset.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setTargetConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setSampling(32, true)
+                            .optLimit(350)
+                            .optUsage(Dataset.Usage.TRAIN)
+                            .build();
+
+            Map<String, Object> data =
+                    (Map<String, Object>) stanfordQuestionAnsweringDataset.getData();
+            Assert.assertEquals(((List<Object>) data.get("data")).size(), 442);
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
+    @Test
+    public void testScenario1() throws TranslateException, IOException {
+        try (NDManager manager = NDManager.newBaseManager()) {
+            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
+                    StanfordQuestionAnsweringDataset.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setTargetConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setSampling(32, true)
+                            .optLimit(10)
+                            .optUsage(Dataset.Usage.VALIDATION)
+                            .build();
+
+            stanfordQuestionAnsweringDataset.prepare();
+            Assert.fail("Invalid data expects exception!");
+        } catch (UnsupportedOperationException uoe) {
+            Assert.assertEquals(uoe.getMessage(), "Validation data not available.");
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/47
+    @Test
+    public void testScenario2() throws IOException, TranslateException {
+        try (NDManager manager = NDManager.newBaseManager()) {
+            StanfordQuestionAnsweringDataset stanfordQuestionAnsweringDataset =
+                    StanfordQuestionAnsweringDataset.builder()
+                            .setSourceConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setTargetConfiguration(
+                                    new TextData.Configuration()
+                                            .setTextEmbedding(
+                                                    TestUtils.getTextEmbedding(
+                                                            manager, EMBEDDING_SIZE)))
+                            .setSampling(32, true)
+                            .optLimit(350)
+                            .optUsage(Dataset.Usage.TEST)
+                            .build();
+
+            stanfordQuestionAnsweringDataset.prepare();
+            stanfordQuestionAnsweringDataset.prepare();
+            Assert.assertEquals(stanfordQuestionAnsweringDataset.size(), 350);
+
+            Record record0 = stanfordQuestionAnsweringDataset.get(manager, 0);
+            Record record6 = stanfordQuestionAnsweringDataset.get(manager, 6);
+            Assert.assertEquals(record6.getData().get("title").getShape().dimension(), 2);
+            Assert.assertEquals(
+                    record0.getData().get("context").getShape().get(0),
+                    record6.getData().get("context").getShape().get(0));
+            Assert.assertEquals(record6.getLabels().size(), 0);
         }
     }
 }

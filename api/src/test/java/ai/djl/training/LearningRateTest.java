@@ -72,6 +72,7 @@ public class LearningRateTest {
         Assert.assertEquals(cosineTracker.getNewValue(300), finalValue);
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/37
     @Test
     public void testCyclicalTracker() {
         float baseValue = 0.01f;
@@ -142,6 +143,7 @@ public class LearningRateTest {
         Assert.assertEquals(cyclicalTrackerCustom.getNewValue(500), 0.04f, epsilon);
     }
 
+    // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/37
     private static class CustomScaleFunction implements CyclicalTracker.ScaleFunction {
         @Override
         public float func(int steps) {

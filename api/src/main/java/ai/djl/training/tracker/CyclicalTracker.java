@@ -14,6 +14,7 @@ package ai.djl.training.tracker;
 
 import ai.djl.util.Preconditions;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/37
 /**
  * {@code CyclicalTracker} is an implementation of {@link Tracker} which is a policy of learning
  * rate adjustment that increases the learning rate off a base value in a cyclical nature, as
