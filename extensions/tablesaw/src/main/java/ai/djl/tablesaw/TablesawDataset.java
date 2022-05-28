@@ -30,7 +30,8 @@ import tech.tablesaw.api.Row;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.ReadOptions;
 
-/** {@code CsvDataset} represents the dataset that stored in a .csv file. */
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1587
+/** {@code TablesawDataset} represents the dataset that stored in a Tablesaw file. */
 public class TablesawDataset extends RandomAccessDataset {
 
     private static final Featurizer NUMERIC_FEATURIZER = new NumericFeaturizer();

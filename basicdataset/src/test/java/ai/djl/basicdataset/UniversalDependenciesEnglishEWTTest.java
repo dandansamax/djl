@@ -32,6 +32,7 @@ public class UniversalDependenciesEnglishEWTTest {
 
     private static final int EMBEDDING_SIZE = 15;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testGetDataWithPreTrainedEmbedding() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -60,6 +61,7 @@ public class UniversalDependenciesEnglishEWTTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testGetDataWithTrainableEmbedding() throws IOException, TranslateException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");
@@ -88,6 +90,7 @@ public class UniversalDependenciesEnglishEWTTest {
         }
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/46
     @Test
     public void testMisc() throws TranslateException, IOException {
         Repository repository = Repository.newInstance("test", "src/test/resources/mlrepo");

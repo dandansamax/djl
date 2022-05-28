@@ -25,10 +25,12 @@ import org.testng.annotations.Test;
 import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.io.csv.CsvReadOptions;
 
+
 public class TablesawDatasetTest {
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1587
     @Test
-    public void testTablesawDataset() throws IOException, TranslateException {
+    public void testTablesawDatasetSize() throws IOException, TranslateException {
         URL dailyDelhiClimateTest =
                 new URL(
                         "https://mlrepo.djl.ai/dataset/tabular/ai/djl/basicdataset/daily-delhi-climate/3.0/DailyDelhiClimateTest.csv");
@@ -60,6 +62,41 @@ public class TablesawDatasetTest {
 
             long size = dailyDelhiClimate.size();
             Assert.assertEquals(size, 114);
+
+        }
+    }
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1587
+    @Test
+    public void testTablesawDatasetRecord() throws IOException, TranslateException {
+        URL dailyDelhiClimateTest =
+                new URL(
+                        "https://mlrepo.djl.ai/dataset/tabular/ai/djl/basicdataset/daily-delhi-climate/3.0/DailyDelhiClimateTest.csv");
+
+        try (Model model = Model.newInstance("model")) {
+            model.setBlock(Blocks.identityBlock());
+
+            NDManager manager = model.getNDManager();
+            TablesawDataset dailyDelhiClimate =
+                    TablesawDataset.builder()
+                            .setReadOptions(
+                                    CsvReadOptions.builder(dailyDelhiClimateTest)
+                                            .header(true)
+                                            .columnTypes(
+                                                    new ColumnType[] {
+                                                            ColumnType.STRING,
+                                                            ColumnType.STRING,
+                                                            ColumnType.STRING,
+                                                            ColumnType.STRING,
+                                                            ColumnType.STRING
+                                                    })
+                                            .build())
+                            .addNumericFeature("meantemp")
+                            .addNumericFeature("meanpressure")
+                            .addNumericLabel("humidity")
+                            .setSampling(32, true)
+                            .build();
+            dailyDelhiClimate.prepare();
 
             Record record = dailyDelhiClimate.get(manager, 3);
             NDList data = record.getData();

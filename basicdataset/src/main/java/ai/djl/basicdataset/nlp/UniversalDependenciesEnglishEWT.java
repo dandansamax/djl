@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/46
 /**
  * A Gold Standard Universal Dependencies Corpus for English, built over the source material of the
  * English Web Treebank LDC2012T13.
