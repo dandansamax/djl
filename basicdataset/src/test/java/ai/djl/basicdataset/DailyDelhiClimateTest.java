@@ -99,7 +99,6 @@ public class DailyDelhiClimateTest {
             Record record = dailyDelhiClimate.get(manager, 2);
             NDList data = record.getData();
             NDList labels = record.getLabels();
-            float[] a = data.head().toFloatArray();
             Assert.assertEquals(
                     data.head().toFloatArray(),
                     new float[] {15708.0f, 7.1666665f, 87.0f, 4.633333f, 1018.6667f});
