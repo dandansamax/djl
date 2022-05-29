@@ -35,6 +35,8 @@ import java.util.List;
  * Vassil Panayotov with the assistance of Daniel Povey. The data is derived from read audiobooks
  * from the LibriVox project, and has been carefully segmented and aligned.
  */
+
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class Librispeech extends SpeechRecognitionDataset {
 
     private static final String VERSION = "1.0";

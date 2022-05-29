@@ -16,6 +16,7 @@ package ai.djl.audio;
 import ai.djl.ndarray.NDArray;
 
 /** Useful utils for audio process. */
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public final class AudioUtils {
 
     private AudioUtils() {}

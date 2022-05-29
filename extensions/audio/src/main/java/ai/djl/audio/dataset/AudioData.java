@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
  *
  * <p>See {@link SpeechRecognitionDataset} for an example.
  */
+
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class AudioData {
     private static final Logger logger = LoggerFactory.getLogger(LocalRepository.class);
     private int sampleRate;

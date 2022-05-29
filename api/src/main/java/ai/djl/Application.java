@@ -291,6 +291,7 @@ public class Application {
     }
 
     /** The common set of applications for audio data. */
+    // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
     public interface Audio {
 
         /** Any audio application, including those in {@link Audio}. */
