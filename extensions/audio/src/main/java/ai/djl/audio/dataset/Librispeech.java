@@ -30,13 +30,12 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 /**
  * LibriSpeech is a corpus of approximately 1000 hours of 16kHz read English speech, prepared by
  * Vassil Panayotov with the assistance of Daniel Povey. The data is derived from read audiobooks
  * from the LibriVox project, and has been carefully segmented and aligned.
  */
-
-// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class Librispeech extends SpeechRecognitionDataset {
 
     private static final String VERSION = "1.0";

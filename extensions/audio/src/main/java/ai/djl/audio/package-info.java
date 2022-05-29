@@ -11,6 +11,6 @@
  * and limitations under the License.
  */
 
-/** Contains audio utils and datasets for djl. */
 // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
+/** Contains audio utils and datasets for djl. */
 package ai.djl.audio;

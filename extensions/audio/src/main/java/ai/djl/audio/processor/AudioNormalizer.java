@@ -17,8 +17,8 @@ import ai.djl.audio.AudioUtils;
 import ai.djl.ndarray.NDArray;
 import ai.djl.ndarray.NDManager;
 
-/** Use the mean and standard values to calculate the normalized values for audio signal. */
 // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
+/** Use the mean and standard values to calculate the normalized values for audio signal. */
 public class AudioNormalizer implements AudioProcessor {
 
     private float targetDb;

@@ -11,6 +11,6 @@
  * and limitations under the License.
  */
 
-/** Contains multiple processors for audio and signal processing. */
 // CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
+/** Contains multiple processors for audio and signal processing. */
 package ai.djl.audio.processor;

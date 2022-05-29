@@ -30,6 +30,7 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 /**
  * {@link AudioData} is a utility for managing audio data within a {@link
  * ai.djl.training.dataset.Dataset}. It contains some basic information of an audio file and provide
@@ -40,8 +41,6 @@ import org.slf4j.LoggerFactory;
  *
  * <p>See {@link SpeechRecognitionDataset} for an example.
  */
-
-// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class AudioData {
     private static final Logger logger = LoggerFactory.getLogger(LocalRepository.class);
     private int sampleRate;

@@ -12,6 +12,6 @@
  */
 
 
-/** Contains tests for the processor module. */
 //CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
+/** Contains tests for the processor module. */
 package ai.djl.audio.processor;

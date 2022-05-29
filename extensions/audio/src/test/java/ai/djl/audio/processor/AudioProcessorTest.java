@@ -24,12 +24,12 @@ import java.util.Arrays;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-// CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class AudioProcessorTest {
 
     private static String filePath = "src/test/resources/test.wav";
     private static float eps = 1e-3f;
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
     @Test
     public void testAudioNormalizer() throws EmbeddingException {
         NDManager manager = NDManager.newBaseManager(Device.cpu());
@@ -42,6 +42,7 @@ public class AudioProcessorTest {
         Assert.assertEquals(AudioUtils.rmsDb(samples), -20.0f, 1e-3);
     }
 
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
     @Test
     public static void testLinearSpecgram() throws EmbeddingException {
         NDManager manager = NDManager.newBaseManager(Device.cpu());

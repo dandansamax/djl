@@ -20,8 +20,9 @@ import ai.djl.translate.TranslateException;
 import java.io.IOException;
 import org.testng.annotations.Test;
 
-// CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class LibrispeechTest {
+
+    // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
     @Test(enabled = false)
     public void testLibrispeech() throws IOException, TranslateException {
 

@@ -26,6 +26,7 @@ import ai.djl.repository.Repository;
 import ai.djl.training.dataset.RandomAccessDataset;
 import java.util.List;
 
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 /**
  * {@code SpeechRecognitionDataset} is an abstract dataset that can be used for datasets for
  * Automatic Speech Recognition (ASR) where the source data is {@link AudioData} and the target data
@@ -41,7 +42,6 @@ import java.util.List;
  * featurize data, if users want to write their own featurizer, they can get the original {@code
  * NDArray} from {@link AudioData} without using any {@link ai.djl.audio.processor.AudioProcessor}.
  */
-// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public abstract class SpeechRecognitionDataset extends RandomAccessDataset {
 
     protected AudioData sourceAudioData;
