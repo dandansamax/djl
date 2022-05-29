@@ -24,6 +24,7 @@ import java.util.Arrays;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+// CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class AudioProcessorTest {
 
     private static String filePath = "src/test/resources/test.wav";

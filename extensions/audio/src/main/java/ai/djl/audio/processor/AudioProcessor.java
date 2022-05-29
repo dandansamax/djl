@@ -17,6 +17,7 @@ import ai.djl.ndarray.NDArray;
 import ai.djl.ndarray.NDManager;
 
 /** This interface is used for extracting features from origin audio samples. */
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public interface AudioProcessor {
 
     /**

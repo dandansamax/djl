@@ -20,6 +20,7 @@ import ai.djl.ndarray.NDManager;
 import org.jtransforms.fft.FloatFFT_1D;
 
 /** Calculate linear spectrogram by short-time fourier transform. */
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public class LinearSpecgram implements AudioProcessor {
 
     private static float eps = 1e-14f;

@@ -25,7 +25,6 @@ import org.testng.annotations.Test;
 import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.io.csv.CsvReadOptions;
 
-
 public class TablesawDatasetTest {
 
     // CS304 (manually written) Issue link: https://github.com/deepjavalibrary/djl/issues/1587
@@ -62,7 +61,6 @@ public class TablesawDatasetTest {
 
             long size = dailyDelhiClimate.size();
             Assert.assertEquals(size, 114);
-
         }
     }
 
@@ -84,11 +82,11 @@ public class TablesawDatasetTest {
                                             .header(true)
                                             .columnTypes(
                                                     new ColumnType[] {
-                                                            ColumnType.STRING,
-                                                            ColumnType.STRING,
-                                                            ColumnType.STRING,
-                                                            ColumnType.STRING,
-                                                            ColumnType.STRING
+                                                        ColumnType.STRING,
+                                                        ColumnType.STRING,
+                                                        ColumnType.STRING,
+                                                        ColumnType.STRING,
+                                                        ColumnType.STRING
                                                     })
                                             .build())
                             .addNumericFeature("meantemp")

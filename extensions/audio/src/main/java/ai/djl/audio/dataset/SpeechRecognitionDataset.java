@@ -41,6 +41,7 @@ import java.util.List;
  * featurize data, if users want to write their own featurizer, they can get the original {@code
  * NDArray} from {@link AudioData} without using any {@link ai.djl.audio.processor.AudioProcessor}.
  */
+// CS304 Issue link: https://github.com/deepjavalibrary/djl/issues/1589
 public abstract class SpeechRecognitionDataset extends RandomAccessDataset {
 
     protected AudioData sourceAudioData;
